@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 
 _SEED = 42
-_ROOT = Path(__file__).resolve().parent.parent
+_ROOT = Path(__file__).resolve().parent.parent.parent
 _OUT_DIR = _ROOT / "data"
 
 
