@@ -1,5 +1,6 @@
 # Cost-Effectiveness Analysis in Development Economics
 
+
 ## 1. What is CEA?
 
 Cost-effectiveness analysis (CEA) answers the question: given a fixed budget, which intervention produces the largest total outcome on a particular metric? It compares all kinds of interventions within a single outcome domain and expresses value as _cost per unit of outcome achieved_.
