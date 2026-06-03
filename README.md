@@ -82,7 +82,44 @@ See `notebooks/01_core_model.ipynb` for the computational version and chart.
 
 ## 4. Adjustments: Time Horizon and Discounting [→ notebook 02]
 
-*(To be implemented in Phase 2.)*
+The Phase 1 league table assumed three things: all costs are proportional to beneficiaries, effects last exactly one year, and they do not decay. All three are wrong for most real interventions. This section relaxes them.
+
+### The adjustment gap
+
+Published evaluations of development interventions rarely report the data needed to adjust for external validity, counterfactual conditions, or implementation fidelity at scale. Of the adjustments that *can* be implemented from published data, time horizon and discounting are the most consequential — and the most defensible. Cost structure (fixed vs. variable) can also be adjusted when studies report cost components separately, though this is uncommon. (For a full discussion of what cannot be adjusted, see Section 2.)
+
+### Discounted effective effect
+
+The effective discounted effect of intervention $i$ is:
+
+$$\hat{\tau}_i^{eff} = \hat{\tau}_i \cdot \sum_{t=0}^{T_i - 1} \frac{\rho_i^t}{(1+r)^t}$$
+
+where $T_i$ is the duration in years, $\rho_i \in (0,1]$ is the annual retention rate (fraction of the initial effect remaining each year), and $r$ is the annual discount rate (default 0.03). When $\rho_i = 1$ and $T_i = 1$, this reduces to $\hat{\tau}_i$, recovering the Phase 1 case.
+
+### Fixed vs. variable costs
+
+Relaxing Assumption A1: adjusted cost is defined as
+
+$$C_i^{adj} = \frac{C_i^{fixed}}{N} + \frac{C_i^{var}}{p_{c,i}}$$
+
+where $N$ is the number of beneficiaries (held constant across interventions for comparability, default $N=1{,}000$) and $p_{c,i}$ is the compliance rate. When $C_i^{fixed} = 0$, this reduces to the proportional-cost case.
+
+### The time-adjusted league table
+
+| Rank | Intervention | Phase 1 CE* ($) | Phase 2 CE* ($) | Rank shift |
+|---|---|---|---|---|
+| 1 | Teaching at the Right Level (TaRL) | 2.22 | 1.48 | — |
+| 2 | Early childhood development (ECD) | 11.36 | 2.29 | ↑3 |
+| 3 | Deworming | 4.00 | 4.39 | ↓1 |
+| 4 | Structured pedagogy | 6.67 | 4.44 | ↓1 |
+| 5 | Computer-assisted learning (CAL) | 8.57 | 5.00 | ↓1 |
+| 6 | Teacher performance pay | 18.00 | 13.49 | ↑1 |
+| 7 | School meals | 16.67 | 17.85 | ↓1 |
+| 8 | Conditional cash transfer (CCT) | 31.43 | 21.29 | — |
+
+**Headline result:** ECD moves from 5th to 2nd when its 10-year duration is accounted for. Short-duration interventions with low retention (school meals, deworming) lose ground. TaRL remains first, but the gap narrows.
+
+See `notebooks/02_time_horizon.ipynb` for the computational version and side-by-side chart.
 
 ---
 
