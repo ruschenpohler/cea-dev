@@ -2,7 +2,7 @@
 agents.md
 impl-log.jsonl
 impl-log.md
-impl-plan_*.md
+impl-plan*.md
 
 # generated artefacts
 *.parquet
