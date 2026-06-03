@@ -26,7 +26,7 @@ The table below illustrates the shape of the data needed. Note that all paramete
 | Conditional cash transfer (CCT) | 0.07 | 22.00 | 3 |
 | Deworming | 0.05 | 2.00 | 1 |
 
-For the full parameter table with standard errors, compliance rates, and cost bounds use the entrypoint src/generate_data.py.csv
+*For the full parameter table with standard errors, compliance rates, and cost bounds use the entrypoint `src/generate_data.py`.*
 
 ### What this analysis can and cannot tell you
 
@@ -75,7 +75,7 @@ The table below assumes that effects persist for exactly one year and do not dec
 | 7 | Teacher performance pay | 0.10 | 18.00 | 0.0056 | 18.00 |
 | 8 | Conditional cash transfer (CCT) | 0.07 | 22.00 | 0.0032 | 31.43 |
 
-See `notebooks/01_core_model.ipynb` for the computational version and chart.
+*See `notebooks/01_core_model.ipynb` for the computational version and chart.*
 
 ---
 
@@ -116,9 +116,11 @@ where $N$ is the number of beneficiaries (held constant across interventions for
 | 7 | School meals | 16.67 | 17.85 | ↓1 |
 | 8 | Conditional cash transfer (CCT) | 31.43 | 21.29 | — |
 
+*See `notebooks/02_time_horizon.ipynb` for the computational version and side-by-side chart.*
+
+
 **Headline result:** ECD moves from 5th to 2nd when its 10-year duration is accounted for. Short-duration interventions with low retention (school meals, deworming) lose ground. TaRL remains first, but the gap narrows.
 
-See `notebooks/02_time_horizon.ipynb` for the computational version and side-by-side chart.
 
 ---
 
