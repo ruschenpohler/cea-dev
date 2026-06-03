@@ -2,19 +2,18 @@
 
 ## 1. What is CEA?
 
-The decision problem: a budget, multiple candidates, one outcome. CEA — cost-effectiveness analysis — answers the question: given a fixed budget, which intervention produces the largest total outcome? It expresses value as _cost per unit of outcome achieved_.
+Cost-effectiveness analysis (CEA) answers the question: given a fixed budget, which intervention produces the largest total outcome on a particular metric? It compares all kinds of interventions within a single outcome domain and expresses value as _cost per unit of outcome achieved_.
 
-CEA vs. CBA: cost-benefit analysis monetizes all outcomes; CEA compares within a single natural-unit outcome domain. No moral weights, no income-doubling equivalents. (See Appendix A: Glossary.)
+This differs from cost-benefit analysis which compares interventions across outcome domains, often using moral weights, income-doubling equivalents, etc.
 
-The core principle: no intervention is cost-effective in isolation. Cost-effectiveness is a ranking. An intervention looks cheap or expensive only relative to a comparator.
 
 ---
 
 ## 2. The Worked Example: Eight Education Interventions
 
-**Outcome:** Improvement in standardized test scores, measured in standard deviations (SD). The display metric is _cost per 0.1 SD gain per beneficiary_.
+**Outcome:** Improvement in standardized test scores, measured in standard deviations (SD). The display metric is _cost per 0.1 SD gain per beneficiary_, a comon metric in education research.
 
-All parameters are synthetic but calibrated to plausible ranges from published evaluations in the education literature. The eight interventions:
+The table below illustrates the shape of the data needed. Note that all parameters are synthetics but calibrated to plausible ranges in the education literature.
 
 | Intervention | Effect (SD) | Cost/ben. ($) | Duration (yrs) |
 |---|---|---|---|
@@ -27,13 +26,13 @@ All parameters are synthetic but calibrated to plausible ranges from published e
 | Conditional cash transfer (CCT) | 0.07 | 22.00 | 3 |
 | Deworming | 0.05 | 2.00 | 1 |
 
-Full parameter table with standard errors, compliance rates, and cost bounds is in `data/interventions.csv`.
+For the full parameter table with standard errors, compliance rates, and cost bounds use the entrypoint src/generate_data.py.csv
 
 ### What this analysis can and cannot tell you
 
-The cost-effectiveness ratios in this framework are computed from effect estimates and cost figures reported in evaluation studies. Effect estimates carry sampling uncertainty — the standard error reflects the fact that the study observed one sample from a population, and a different sample would have produced a different estimate. This uncertainty propagates directly into rankings: an intervention that looks like the best buy at point estimates may not look like the best buy once we account for the fact that its effect estimate is imprecise. We quantify and visualize this throughout.
+The cost-effectiveness ratios in this framework are computed from effect estimates and cost figures of the type usually reported in evaluation studies. Effect estimates carry sampling uncertainty; that is, the standard error reflects the fact that the study observed one sample from a population, and a different sample would have produced a different estimate. This uncertainty propagates directly into rankings: an intervention that looks like the best buy from point estimates may not look like the best buy once we account for the fact that its effect estimate is imprecise. We quantify and visualize this throughout.
 
-Three further sources of uncertainty exist but cannot be quantified from published data alone. The first is external validity: whether the effect observed in the study population replicates in the target context, which requires multiple independent replications with documented context variation. The second is the counterfactual: whether the target population would receive a comparable intervention in the absence of this one, which requires data on take-up of comparable programs in the target setting. The third is implementation fidelity at scale: whether the effect holds when moving from a supervised research trial to routine government delivery, which requires paired efficacy and effectiveness evaluations of the same protocol. Published evaluations rarely report the data needed to estimate any of these three factors systematically. The closest existing practice is GiveWell's approach of assigning explicit but judgment-based weights to each. Rankings produced by this framework should be read as conditional on the study estimates: informative about relative cost-effectiveness under the assumption that effects replicate, and a starting point for the harder judgment about whether they will.
+Three further sources of uncertainty exist but cannot typically be quantified from published data. The first is external validity, whether the effect observed in the study population replicates in the target context, which requires multiple independent replications with documented context variation. The second is the counterfactual, whether the target population would receive a comparable intervention in the absence of the experimentally administrated, which requires data on take-up of comparable programs in the target setting. The third is implementation fidelity at scale; that is, whether the effect holds when moving from a supervised research trial to routine government delivery, which requires paired efficacy and effectiveness evaluations of the same protocol. Published evaluations rarely report the data needed to estimate any of these three factors systematically. The closest existing practice is GiveWell's approach of assigning explicit but judgment-based weights to each. Rankings produced by this framework should be read as conditional on the study estimates: informative about relative cost-effectiveness under the assumption that effects replicate, and a starting point for the harder judgment about whether they will.
 
 ---
 
@@ -61,9 +60,9 @@ We use the cost estimate reported in each source study. Studies vary in what the
 
 ### A note on time
 
-The league table below assumes that effects persist for exactly one year and do not decay thereafter. ECD and CAL produce their effects over longer horizons; school meals and deworming do not. Section 4 introduces heterogeneous durations and annual decay rates, and the ranking shifts materially.
+The table below assumes that effects persist for exactly one year and do not decay thereafter. ECD and CAL produce their effects over longer horizons; school meals and deworming do not. Section 4 introduces heterogeneous durations and annual decay rates, and the ranking shifts materially.
 
-### The unadjusted league table
+### Unadjusted effets and costs
 
 | Rank | Intervention | Effect (SD) | Cost ($) | Effectiveness (SD/$) | Cost per 0.1 SD ($) |
 |---|---|---|---|---|---|
@@ -82,7 +81,7 @@ See `notebooks/01_core_model.ipynb` for the computational version and chart.
 
 ## 4. Adjustments: Time Horizon and Discounting [→ notebook 02]
 
-The Phase 1 league table assumed three things: all costs are proportional to beneficiaries, effects last exactly one year, and they do not decay. All three are wrong for most real interventions. This section relaxes them.
+The  unadjusted table assumed three things: all costs are proportional to beneficiaries, effects last exactly one year, and they do not decay. All three are wrong for most real interventions. This section relaxes them.
 
 ### The adjustment gap
 
@@ -94,7 +93,7 @@ The effective discounted effect of intervention $i$ is:
 
 $$\hat{\tau}_i^{eff} = \hat{\tau}_i \cdot \sum_{t=0}^{T_i - 1} \frac{\rho_i^t}{(1+r)^t}$$
 
-where $T_i$ is the duration in years, $\rho_i \in (0,1]$ is the annual retention rate (fraction of the initial effect remaining each year), and $r$ is the annual discount rate (default 0.03). When $\rho_i = 1$ and $T_i = 1$, this reduces to $\hat{\tau}_i$, recovering the Phase 1 case.
+where $T_i$ is the duration in years, $\rho_i \in (0,1]$ is the annual retention rate (fraction of the initial effect remaining each year), and $r$ is the annual discount rate (default 0.03). When $\rho_i = 1$ and $T_i = 1$, this reduces to $\hat{\tau}_i$, recovering the unadjusted case.
 
 ### Fixed vs. variable costs
 
@@ -104,9 +103,9 @@ $$C_i^{adj} = \frac{C_i^{fixed}}{N} + \frac{C_i^{var}}{p_{c,i}}$$
 
 where $N$ is the number of beneficiaries (held constant across interventions for comparability, default $N=1{,}000$) and $p_{c,i}$ is the compliance rate. When $C_i^{fixed} = 0$, this reduces to the proportional-cost case.
 
-### The time-adjusted league table
+### Time-adjusted effects and costs
 
-| Rank | Intervention | Phase 1 CE* ($) | Phase 2 CE* ($) | Rank shift |
+| Rank | Intervention | Unadjusted CE* ($) | Time-adj. CE* ($) | Rank shift |
 |---|---|---|---|---|
 | 1 | Teaching at the Right Level (TaRL) | 2.22 | 1.48 | — |
 | 2 | Early childhood development (ECD) | 11.36 | 2.29 | ↑3 |
@@ -125,25 +124,25 @@ See `notebooks/02_time_horizon.ipynb` for the computational version and side-by-
 
 ## 5. Uncertainty [→ notebook 03]
 
-*(To be implemented in Phase 3.)*
+*(To be implemented)*
 
 ---
 
 ## 6. Sensitivity Analysis [→ notebook 04]
 
-*(To be implemented in Phase 4.)*
+*(To be implemented)*
 
 ---
 
 ## 7. Joint Sensitivity Analysis [→ notebook 05]
 
-*(To be implemented in Phase 5.)*
+*(To be implemented)*
 
 ---
 
 ## 8. Extension: Bayesian CEA [→ extensions/06_bayesian.ipynb]
 
-*(To be implemented in Phase 6.)*
+*(To be implemented)*
 
 ---
 
@@ -159,4 +158,4 @@ See `notebooks/02_time_horizon.ipynb` for the computational version and side-by-
 
 ## Appendix B: Mathematical Details
 
-*(To be populated as phases are completed.)*
+*(To be implemented)*
