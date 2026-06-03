@@ -27,7 +27,6 @@ credentials.json
 
 # notebooks
 .ipynb_checkpoints/
-notebooks/
 
 # spark
 metastore_db/
