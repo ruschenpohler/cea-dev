@@ -2,7 +2,12 @@
 name = "cea-dev"
 version = "0.1.0"
 requires-python = ">=3.11,<4.0"
-dependencies = []
+dependencies = [
+    "matplotlib>=3.10.9",
+    "numpy>=2.4.6",
+    "pandas>=3.0.3",
+    "seaborn>=0.13.2",
+]
 
 [project.optional-dependencies]
 dev = [
