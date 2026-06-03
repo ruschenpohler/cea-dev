@@ -6,7 +6,6 @@ Cost-effectiveness analysis (CEA) answers the question: given a fixed budget, wh
 
 This differs from cost-benefit analysis which compares interventions across outcome domains, often using moral weights, income-doubling equivalents, etc.
 
-
 ---
 
 ## 2. The Worked Example: Eight Education Interventions
@@ -36,7 +35,11 @@ Three further sources of uncertainty exist but cannot typically be quantified fr
 
 ---
 
-## 3. The Core Model [→ notebook 01]
+## 3. The Core Model
+
+```
+For the core model code, see: [Notebook 01](cea-dev/notebooks/01_core_model.ipynb))
+```
 
 **Internal metric:** effectiveness, defined as SD of learning gain per dollar:
 
@@ -75,11 +78,15 @@ The table below assumes that effects persist for exactly one year and do not dec
 | 7 | Teacher performance pay | 0.10 | 18.00 | 0.0056 | 18.00 |
 | 8 | Conditional cash transfer (CCT) | 0.07 | 22.00 | 0.0032 | 31.43 |
 
-*See `notebooks/01_core_model.ipynb` for the computational version and chart.*
+*See [notebooks/01_core_model.ipynb](cea-dev/notebooks/01_core_model.ipynb) for the computational version and chart.*
 
 ---
 
 ## 4. Adjustments: Time Horizon and Discounting [→ notebook 02]
+
+```
+For the adjustment model code, see: [Notebook 02](cea-dev/notebooks/02_time_horizon.ipynb))
+```
 
 The  unadjusted table assumed three things: all costs are proportional to beneficiaries, effects last exactly one year, and they do not decay. All three are wrong for most real interventions. This section relaxes them.
 
@@ -116,7 +123,7 @@ where $N$ is the number of beneficiaries (held constant across interventions for
 | 7 | School meals | 16.67 | 17.85 | ↓1 |
 | 8 | Conditional cash transfer (CCT) | 31.43 | 21.29 | — |
 
-*See `notebooks/02_time_horizon.ipynb` for the computational version and side-by-side chart.*
+*See  [notebooks/02_time_horizon.ipynb](cea-dev/notebooks/02_time_horizon.ipynb) for the computational version and side-by-side chart.*
 
 
 **Headline result:** ECD moves from 5th to 2nd when its 10-year duration is accounted for. Short-duration interventions with low retention (school meals, deworming) lose ground. TaRL remains first, but the gap narrows.
