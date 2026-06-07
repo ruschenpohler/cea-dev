@@ -104,11 +104,7 @@ The effective discounted effect of intervention $i$ is:
 
 $$\hat{\tau}_i^{eff} = \hat{\tau}_i \cdot \sum_{t=0}^{T_i - 1} \frac{\rho_i^t}{(1+r)^t}$$
 
-where $T_i$ is the duration in years,
-
-$$\rho_i \in (0,1]$$
-
-is the annual retention rate (fraction of the initial effect remaining each year), and $r$ is the annual discount rate (default 0.03). When $\rho_i = 1$ and $T_i = 1$, this reduces to $\hat{\tau}_i$, recovering the unadjusted case.
+where $T_i$ is the duration in years, $\rho_i \in (0,1]$ is the annual retention rate (fraction of the initial effect remaining each year), and $r$ is the annual discount rate (default 0.03). When $\rho_i = 1$ and $T_i = 1$, this reduces to $\hat{\tau}_i$, recovering the unadjusted case.
 
 ### Fixed vs. variable costs
 
