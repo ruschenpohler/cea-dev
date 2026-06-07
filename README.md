@@ -45,51 +45,19 @@ For the core model code, see: [Notebook 01](cea-dev/notebooks/01_core_model.ipyn
 
 $$v_i = \frac{\hat{\tau}_i}{C_i}$$
 
-where
-
-$$\hat{\tau}_i$$
-
-is the estimated effect in SD and
-
-$$C_i$$
-
-is cost per beneficiary in USD. For display, this is inverted and scaled to cost per 0.1 SD:
+where $\hat{\tau}_i$ is the estimated effect in SD and $C_i$ is cost per beneficiary in USD. For display, this is inverted and scaled to cost per 0.1 SD:
 
 $$CE_i^* = \frac{0.1}{v_i} = \frac{0.1 \cdot C_i}{\hat{\tau}_i}$$
 
-Working in
-
-$$v_i$$
-
-throughout avoids numerical instability when
-
-$$\hat{\tau}_i$$
-
-is near zero. All uncertainty intervals are computed on the
-
-$$v_i$$
-
-scale and inverted for display; note that this inversion makes confidence intervals asymmetric in the
-
-$$CE^*$$
-
-display metric, which is correct and should not be adjusted away.
+Working in $v_i$ throughout avoids numerical instability when $\hat{\tau}_i$ is near zero. All uncertainty intervals are computed on the $v_i$ scale and inverted for display; note that this inversion makes confidence intervals asymmetric in the $CE^*$ display metric, which is correct and should not be adjusted away.
 
 ### ITT vs. TOT and cost structure
 
-In a randomized controlled trial (RCT), the intent-to-treat (ITT) estimate
-
-$$\hat{\tau}_{ITT}$$
-
-is the average effect over all individuals offered the intervention, including non-compliers. The treatment-on-the-treated (TOT) estimate
+In a randomized controlled trial (RCT), the intent-to-treat (ITT) estimate $\hat{\tau}_{ITT}$ is the average effect over all individuals offered the intervention, including non-compliers. The treatment-on-the-treated (TOT) estimate
 
 $$\hat{\tau}_{TOT} = \hat{\tau}_{ITT} / p_c$$
 
-isolates the effect on those who actually participated, where
-
-$$p_c$$
-
-is the compliance rate. Under the simplifying assumption that total cost scales proportionally with the number of individuals offered the intervention (**Assumption A1: proportional costs**), the CE ratio is invariant to whether ITT or TOT is used, because the compliance rate cancels. This assumption is relaxed in Section 4.
+isolates the effect on those who actually participated, where $p_c$ is the compliance rate. Under the simplifying assumption that total cost scales proportionally with the number of individuals offered the intervention (**Assumption A1: proportional costs**), the CE ratio is invariant to whether ITT or TOT is used, because the compliance rate cancels. This assumption is relaxed in Section 4.
 
 Invariance holds only when all costs are variable; that is, when total program cost scales proportionally with the number of people offered the intervention. Fixed costs, such as curriculum development, staff training, and platform infrastructure, violate this assumption. When fixed costs are material, low compliance spreads them over fewer effective participants, making the cost per complier higher than the cost per person offered. As a consequence, ITT may understate the true cost of achieving a particular effect. Section 4 relaxes the proportional-cost assumption and shows how the CE ratio changes.
 
@@ -132,39 +100,15 @@ Published evaluations of development interventions rarely report the data needed
 
 ### Discounted effective effect
 
-The effective discounted effect of intervention
-
-$$i$$
-
-is:
+The effective discounted effect of intervention $i$ is:
 
 $$\hat{\tau}_i^{eff} = \hat{\tau}_i \cdot \sum_{t=0}^{T_i - 1} \frac{\rho_i^t}{(1+r)^t}$$
 
-where
-
-$$T_i$$
-
-is the duration in years,
+where $T_i$ is the duration in years,
 
 $$\rho_i \in (0,1]$$
 
-is the annual retention rate (fraction of the initial effect remaining each year), and
-
-$$r$$
-
-is the annual discount rate (default 0.03). When
-
-$$\rho_i = 1$$
-
-and
-
-$$T_i = 1$$
-
-, this reduces to
-
-$$\hat{\tau}_i$$
-
-, recovering the unadjusted case.
+is the annual retention rate (fraction of the initial effect remaining each year), and $r$ is the annual discount rate (default 0.03). When $\rho_i = 1$ and $T_i = 1$, this reduces to $\hat{\tau}_i$, recovering the unadjusted case.
 
 ### Fixed vs. variable costs
 
@@ -172,23 +116,7 @@ Relaxing Assumption A1: adjusted cost is defined as
 
 $$C_i^{adj} = \frac{C_i^{fixed}}{N} + \frac{C_i^{var}}{p_{c,i}}$$
 
-where
-
-$$N$$
-
-is the number of beneficiaries (held constant across interventions for comparability, default
-
-$$N=1{,}000$$
-
-) and
-
-$$p_{c,i}$$
-
-is the compliance rate. When
-
-$$C_i^{fixed} = 0$$
-
-, this reduces to the proportional-cost case.
+where $N$ is the number of beneficiaries (held constant across interventions for comparability, default $N=1{,}000$) and $p_{c,i}$ is the compliance rate. When $C_i^{fixed} = 0$, this reduces to the proportional-cost case.
 
 ### Time-adjusted effects and costs
 
